@@ -22,7 +22,7 @@ namespace Parallel_Task
             Task task2 = task1.ContinueWith(action);
 
             Action<Task<int[]>> action2 = new Action<Task<int[]>>(MaxArray);
-            Task task3 = task2.ContinueWith(action2);
+            Task task3 = task1.ContinueWith(action2);
 
             task1.Start();
             Console.ReadKey();
@@ -36,31 +36,34 @@ namespace Parallel_Task
             for (int i = 0; i < n; i++)
             {
                 array[i] = random.Next(0, 100);
+                Console.WriteLine($"{array[i]} ");
             }
+            Console.WriteLine();
             return array;
         }
 
-        static int[] SumArray(Task<int[]> task) 
+        static void SumArray(Task<int[]> task) 
         {
+           int[] array = task.Result;
             int s = 0;
             for (int i = 0; i < array.Count(); i++)
             {
-                object array = null;
                 s += array[i];
                   
             }
-            return s;
+            Console.WriteLine(s);
         }
 
-        static int[] MaxArray(Task<int[]> task)
+        static void MaxArray(Task<int[]> task)
         {
-            int max = array[i];
+            int[] array = task.Result;
+            int max = array[0];
             foreach (int a in array)
             {
                 if (a>max)
                     max = a;
             }
-            return max;
+            Console.WriteLine(max);
         }
 
         //static int[] SortArray(Task<int[]> task)
